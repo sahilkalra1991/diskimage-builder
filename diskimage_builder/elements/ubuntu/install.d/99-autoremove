@@ -6,4 +6,7 @@ fi
 set -eu
 set -o pipefail
 
+apt-get -y install syslinux isolinux
 apt-get -y autoremove
+
+ls /usr/lib/

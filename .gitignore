@@ -22,3 +22,6 @@ ChangeLog
 bin/diskimage_builder
 *.bak
 *.orig
+
+env_dib
+images_dib/ipa*
