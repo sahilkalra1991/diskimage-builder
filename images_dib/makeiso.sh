@@ -7,13 +7,14 @@
 set -e
  
 # Default configurations
-SYSLINUX_VERSION="6.02"
+SYSLINUX_VERSION="6.03"
 COREOS_VERSION="master"
 BOOT_ENV="bios"
 SSH_PUBKEY_PATH=~/.ssh/id_rsa.pub
  
 # Initialze variables
-SYSLINUX_BASE_URL="https://www.kernel.org/pub/linux/utils/boot/syslinux"
+#SYSLINUX_BASE_URL="https://www.kernel.org/pub/linux/utils/boot/syslinux"
+SYSLINUX_BASE_URL="https://mirrors.edge.kernel.org/pub/linux/utils/boot/syslinux"
 SYSLINUX_BASENAME="syslinux-$SYSLINUX_VERSION"
 SYSLINUX_URL="${SYSLINUX_BASE_URL}/${SYSLINUX_BASENAME}.tar.gz"
  
@@ -39,12 +40,12 @@ mkdir -p iso/ubuntu
 mkdir -p iso/syslinux
 mkdir -p iso/isolinux
  
-echo "-----> Download CoreOS's kernel"
+echo "-----> Copy Ubuntu kernel (ipa_ubuntu.vmlinuz) to work/iso"
 if [ ! -e iso/ubuntu/vmlinuz ]; then
   cp $bindir/ipa_ubuntu.vmlinuz iso/ubuntu/vmlinuz
 fi
  
-echo "-----> Download CoreOS's initrd"
+echo "-----> Copy Ubuntu initrd (ipa_ubuntu.initramfs) to work/iso"
 if [ ! -e iso/ubuntu/ipa_ubuntu.initramfs ]; then
   cp $bindir/ipa_ubuntu.initramfs iso/ubuntu/initramfs
 fi
@@ -63,7 +64,7 @@ EOF
 rm -rf usr/share/oem
 cd $workdir
  
-echo "-----> Download syslinux and copy to iso directory"
+echo "-----> Download syslinux and copy to iso directory: $SYSLINUX_URL"
 if [ ! -e ${SYSLINUX_BASENAME} ]; then
   curl -O $SYSLINUX_URL
 fi
@@ -102,4 +103,3 @@ cd $bindir
 rm -rf $workdir
  
 echo "-----> Finished"
-
